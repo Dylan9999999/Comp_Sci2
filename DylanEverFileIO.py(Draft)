@@ -1,0 +1,166 @@
+""" 1.  Count some criteria In the database ex) Total Senior
+2. Make decisions using data In the database ex) Total Boys vs Girls
+4. Make complex selections from the data using several criteria ex) Total By Zip Code
+5. Make selections from the database using user input values ex) Ask User
+6. Include “no match” results ex) “Not Found”
+7. Add new data records to the database Append Student to File
+8. Permit the user to enter the filename
+9. List students by firstname, lastname sorted by last name.
+9a. Write any given output to a file as a “CSV” """
+
+
+def main():
+   
+    """ doc """
+    file_input = open(r"C:\Users\dever26\Desktop\gcds_data3.csv")
+
+    file_input.readline()                       #skip first line of header info
+    answer = "Y"
+    go = True
+
+    print("Menu: Enter Choice or 'Q' to (Q)uit:")
+    print("1) Print All Students in a specific Grade")
+    print("2) Print a Specific Students Information")
+    print("3) Print Boys Vs. Girls")
+    print("4) Print all males")
+    print("5) Print all females")
+    print("6) Print students in a specific town")
+    print("7) How many kids in each family go to GCDS")
+    print("8) Add student and information to file")
+    print("9) Sort by last name")
+    while go is True:
+        if answer == "1":
+            grade = input ("Enter a Grade: ")            
+            check_grade(file_input, grade)
+        elif answer == "2":
+            student_lookup(file_input)
+        elif answer == "3":
+            boys_girls(file_input)
+        elif answer == "4":
+            check_males(file_input)
+        elif answer == "5":
+            check_females(file_input)
+        elif answer == "6":
+            location = input ("Enter a location: ").lower()
+            check_location(file_input, location)
+        elif answer == "7":
+            family = input ("Enter a last name: ").lower()
+            check_family(file_input, family)
+        elif answer == "8":
+            add_student(file_input)
+        elif answer == "9":
+            organize(file_input)
+        
+        elif answer == "Q":
+            go = False
+            print("bye")
+            return
+           
+
+
+
+def check_grade(file_in, grade):
+    """ doc """
+
+    file_in.seek(1)                                     #move pointer to line 1
+
+    for record in file_in:
+        kid = record.split(",")
+        if kid[2] == "Grade " + grade :
+            print(kid[1] + " " + kid[0])
+
+
+
+def student_lookup(file_in):
+    """ doc """
+
+    file_in.seek(1)                                     #move pointer to line 1
+
+    FirstName = input("Enter First Name:")
+    LastName = input("Enter Last Name:")
+    
+    for record in file_in:
+        kid = record.split(",")
+        if kid[1].lower() == FirstName.lower() and kid[0].lower() == LastName.lower():
+            print("\n" + kid[1] + "\n" + kid[0] + "\n" + kid[2] + "\n" + kid[3] + "\n" + kid[4] + "\n" + kid[5] + "\n" + kid[6])
+
+def boys_girls(file_in):
+    """doc"""
+    boys = 0
+    girls = 0
+    file_in.seek(1)
+    for record in file_in:
+        kid = record.split(",")
+        if kid[3] == "Male":
+            boys += 1
+        if kid[3] == "Female":
+            girls += 1
+    print (f"Total boys: {boys} \n + Total girls: {girls}")
+
+def check_males(file_in):
+
+    file_in.seek(1)
+
+    for record in file_in:
+        kid = record.split(",")
+        if kid[3] == "Male":
+            print(kid[1] + " " + kid[0])
+def check_females(file_in):
+
+    file_in.seek(1)
+
+    for record in file_in:
+        kid = record.split(",")
+        if kid[3] == "Female":
+            print(kid[1] + " " + kid[0])
+
+def check_location(file_in, location):
+    file_in.seek(1)
+    for record in file_in:
+        kid = record.split(",")
+        if kid[5].lower() == location:
+            print ((kid[1] + " " + kid[0] + " - " + kid[5]))
+def check_family(file_in, family):
+    file_in.seek(1)
+    home = ""
+    for record in file_in:
+        kid = record.split(",")
+        if kid[0].lower() == family:
+            home = kid[4]
+    file_in.seek(1)
+    for record in file_in:
+        kid = record.split(",")
+        if kid[4] == home:
+            print(kid[1] + " " + kid[0])
+        else:
+            print("No Match")
+            break
+def add_student(file_in):
+    file_in.seek(1)                                     #move pointer to line 1
+
+    for record in file_in:
+        kid = record.split(",")
+
+    add_first = input ("Enter an updated students' first name to add: ")
+    add_last = input ("Enter the updated students' last name to add: ")
+    add_grade = input ("Enter the updated students' grade to add: ")
+    add_gender = input ("Enter the updated students' gender to add: ")
+    add_address = input ("Enter the updated students' adress to add: ")
+    add_city = input ("Enter the updated students' city to add: ")
+    add_state = input ("Enter the updated students' state to add: ")
+    f = open("C:/Users/dever26/Desktop/gcds_data3.csv", "a")
+    f.write(add_last+","+add_first+","+add_grade+","+add_gender+ ","+add_address+","+add_city+","+add_state + "\n")
+    f.close()
+
+    f = open("C:/Users/dever26/Desktop/gcds_data3.csv", "r")
+    print("The record has been added")
+    f.close()
+def organize(file_in):
+    file_in.seek(1)
+    for record in file_in:
+        kid = record.split(",")
+    last_name == [0]
+    last_name.sort()
+
+if __name__ == '__main__': 
+    main()
