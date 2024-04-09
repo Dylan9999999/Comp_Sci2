@@ -1,9 +1,9 @@
 '''
-FLOWER POT
+FLOWER BOX
 Name: Dylan Ever
-Description: This code takes a txt file for a play, cleans up puncuation and graphs 15 words to tell the story.
+Description: This code takes a txt file for a play, cleans up puncuation and graphs the number of times 15 words to tell the story.
 Date: 3/31/2024
-Challenges: Used plotly to graph
+Bonus: Used Plotly to graph
 Bugs: All 15 words have the same value and graphing with variables was not working so just did it manually
 Credits: Zach helped with setting up functions
 '''
@@ -11,10 +11,8 @@ Credits: Zach helped with setting up functions
 from pathlib import Path
 import plotly.graph_objects as go
 
-
 def main():
    #this is the main function which reads in the files, opens them both up and runs their respective functions
-    
     
     """ doc """
     current_dir = Path(__file__).parent
@@ -31,8 +29,6 @@ def main():
     answer = "Y"
     go = True
 
-
-
 def readromeo(file_input1):
     #Checks for number of times specific 15 words are said and then graphs it
     #file_in - reads in the txt document of information
@@ -40,19 +36,17 @@ def readromeo(file_input1):
 
     romeo_dict = {}
     clean_script = cleanse(file_input1)
-    #print(clean_script)
     essential = ['love', 'death', 'lies', 'young', 'friends', 'night', 'sleep', 'farwell', 'poison', 'marrige', 'kiss', 'fate', 'fued', 'verona', 'tragedy']
     for word in clean_script:
-        if word.lower() in essential:
-            for individual in essential:
-                if individual not in romeo_dict:
-                    romeo_dict[individual] = 1
-                else:
-                    romeo_dict[individual] +=1
+        word = word.lower()
+        if word in essential:
+            if word not in romeo_dict:
+                romeo_dict[word] = 1
+            else:
+                romeo_dict[word] +=1
 
-    print(romeo_dict)
-    labels = ['love', 'death', 'lies', 'young', 'friends', 'night', 'sleep', 'farwell', 'poison', 'marrige', 'kiss', 'fate', 'fued', 'verona', 'tragedy']
-    values = [352,352,352,352,352,352,352,352,352,352,352,352,352,352,352,]
+    labels = list(romeo_dict.keys())
+    values = list(romeo_dict.values())
 
     # Create a pie chart
     fig = go.Figure(data=[go.Pie(labels=labels, values=values)])
@@ -70,20 +64,17 @@ def readmidsummer(file_input2):
 
     midsummer_dict = {}
     clean_script = cleanse(file_input2)
-    #print(clean_script)
     essential = ['magic', 'forest', 'faries', 'love', 'athens', 'dream', 'comody', 'marrige', 'mischeif', 'potion', 'quarrel', 'moonlight', 'sleep', 'play', 'transformation']
     for word in clean_script:
-        if word.lower() in essential:
-            for individual in essential:
-                if individual not in midsummer_dict:
-                    midsummer_dict[individual] = 1
-                else:
-                    midsummer_dict[individual] +=1
+        word = word.lower()
+        if word in essential:
+            if word not in midsummer_dict:
+                midsummer_dict[word] = 1
+            else:
+                midsummer_dict[word] +=1
 
-    print(midsummer_dict)
-
-    labels = ['magic', 'forest', 'faries', 'love', 'athens', 'dream', 'comody', 'marrige', 'mischeif', 'potion', 'quarrel', 'moonlight', 'sleep', 'play', 'transformation']
-    values = [193,193,193,193,193,193,193,193,193,193,193,193,193,193,193,]
+    labels = list(midsummer_dict.keys())
+    values = list(midsummer_dict.values())
 
     # Create a pie chart
     fig = go.Figure(data=[go.Pie(labels=labels, values=values)])
@@ -93,6 +84,7 @@ def readmidsummer(file_input2):
 
     # Show the chart
     fig.show()
+
 def cleanse(unclean):
     #Checks for number of times specific 15 words are said and then graphs it
     #file_in - reads in the txt document of information
@@ -101,7 +93,6 @@ def cleanse(unclean):
     not_descriptive = ['the', 'a', 'and', 'of', 'i', 'of', 'or', '\\n']
     new_list = []
     for line in unclean:
-        #print('line is: ' + line)
         clean = line.split()
         for word in clean:
             word = word.lower()
@@ -111,9 +102,7 @@ def cleanse(unclean):
             word = word.replace("!", "")
             word = word.replace("(", "")
             word = word.replace(")", "")
-            #print("the current word is: " + word)
             if word not in not_descriptive:
                 new_list.append(word)
-    #print(new_list)
     return new_list
 main()
