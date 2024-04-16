@@ -1,19 +1,19 @@
 '''
 FLOWER POT
 Name: Dylan Ever
-Description: This code takes a csv file (3rd edition) and provides the user with functions to analyze the data.
+Description: This code takes a csv file and provides the user with functions to analyze the data.
 Date: 12/13/2023
 Bugs: n/a
-Challenges: Creating graph, writing a data set to a new file
-Credits: Zach helped with changing my file location
+Challenges: Creating graph,
+Credits: Sawyer helped with try except feature, Cooper helped with functions
 '''
 
 import matplotlib.pyplot as plt 
 
 def main():
-    #this is the main function which asks the user which fucntion they want to run
+   #this is the main function which asks the user which fucntion they want to run
     
-    #Uses relative path to open file
+    """ doc """
     from pathlib import Path
     current_dir = Path(__file__).parent
     print(current_dir)
@@ -24,10 +24,8 @@ def main():
     file_input.readline()                       #skip first line of header info
     answer = "Y"
     go = True
-    
     while go is True:
     #checks which answer the user inputted and runs the function the user choose
-        
         print("Menu: Enter Choice or 'Q' to (Q)uit:")
         print("1) Print All Students in a specific Grade")
         print("2) Print a Specific Students Information")
@@ -60,11 +58,11 @@ def main():
             family = input ("Enter a last name: ").lower()
             check_family(file_input, family)
         elif answer == "8":
-            add_student(file_input, file_path)
+            add_student(file_input)
         elif answer == "9":
             organize(file_input)
         elif answer == "10":
-            new_file(file_input)
+            csv(file_input)
         elif answer == "Q":
             go = False
             print("bye")
@@ -111,7 +109,9 @@ def student_lookup(file_in):
         kid = record.split(",")
         if kid[1].lower() == first_name.lower() and kid[0].lower() == last_name.lower():
             print("\n" + kid[1] + "\n" + kid[0] + "\n" + kid[2] + "\n" + kid[3] + "\n" + kid[4] + "\n" + kid[5] + "\n" + kid[6])
-
+        else:
+            print("Not found")
+            break
 def boys_girls(file_in):
     #Creates a graph plotting both the population of boys and girls
     #file_in - reads in the excel document of information
@@ -172,9 +172,6 @@ def check_females(file_in):
             print(kid[1] + " " + kid[0])
 
 def check_location(file_in, location):
-    #prints all people in a specific location
-    #location - location inputted by user
-    #return void
     file_in.seek(1)
     for record in file_in:
         kid = record.split(",")
@@ -199,7 +196,7 @@ def check_family(file_in, family):
         else:
             print("Not Found")
             break
-def add_student(file_in, file_path):
+def add_student(file_in):
     #Adds a new data set into the file
     #file_in - reads in the excel document of information
     #return void
@@ -215,17 +212,14 @@ def add_student(file_in, file_path):
     add_address = input ("Enter the updated students' adress to add: ")
     add_city = input ("Enter the updated students' city to add: ")
     add_state = input ("Enter the updated students' state to add: ")
-    f = open(file_path, "a")
+    f = open("C:/Users/dever26/Desktop/gcds_data3.csv", "a")
     f.write(add_last+","+add_first+","+"Grade "+add_grade+","+add_gender+ ","+add_address+","+add_city+","+add_state + "\n")
     f.close()
 
-    f = open(file_path, "r")
+    f = open("C:/Users/dever26/Desktop/gcds_data3.csv", "r")
     print("The record has been added")
     f.close()
 def organize(file_in):
-    #organizes a specific city by last name
-    #file in - reads in the excel file
-    #return - void
     file_in.seek(1)
     city = input("Enter an city: ")
     last_names = []
@@ -236,7 +230,8 @@ def organize(file_in):
             list.append(last_names, kid[0])
 
     last_names.sort()
-def new_file(file_in):
+    print (last_names)
+def csv(file_in):
     #Creates a csv titled town.csv which prints all members of a specific town
     #file_in - reads in the excel document of information
     #return void
