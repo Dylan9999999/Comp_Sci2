@@ -1,0 +1,111 @@
+def main():
+#this is the main function which asks the user which fucntion they want to run
+    while True:
+        n = input("Enter a number or q to quit: ")
+        if (n) == "q":
+            break
+        n = int(n)
+        print ("1) Factorial ")
+        print ("2) Summation")
+        print("3) Powers")
+        print("4) Sum of a number's digits")
+        print ("5) Fibonacci")
+        """print("6) reverse digits")
+        print("7) Compound Interest Balance")
+        print ("8) Product of 2 whole mumbers")
+        print ("9) Square Root Newton's algorithm")"""
+        question = input("What would you like to do? Enter the number: ")
+        if question == "1":
+            print (factorial(n))
+        elif question == "2":
+            print (summation(n))
+        elif question == "3":
+            a = input("Enter the power you would like to raise it to")
+            a = int(a)
+            print (powers(n,a))
+        elif question == "4":
+            print (sum_digits(n))
+        elif question == "5":
+            n2 = input("enter second number")
+            recursion = input("enter number of recursions")
+            print(fibonacci(n, int(n2), int(recursion)))
+        else:
+            print("Invalid Response, try again")
+        """elif question == "6":
+            print(reverse(n))
+        elif question == "7":
+            print (compound(n))
+        elif question == "8":
+            print (product(n))
+        elif question == "9":
+            print (square_root(n))"""
+        
+def factorial(n):
+    #This function takes the factorial of the given number
+    #n - reads in the number inputted by the user
+    #returns the number after being iterated
+    if n == 0:
+        return 1
+    else:
+        return n * factorial(n-1)
+def summation(n):
+    #This function adds together the numbers leading up to the number
+    #n - reads in the number inputted by the user
+    #returns the number after being iterated
+    if n == 0:
+        return 0
+    else:
+        return n + summation(n-1)
+
+def powers(n,a):
+    #This function raises the first number to the second number inputted
+    #a - reads in the power number inputted by the user
+    #n - reads in the number inputted by the user
+    #returns the number after being iterated
+
+    if a == 0:
+        return 1
+    else:
+        return n * powers(n, a-1)
+
+def sum_digits(n):
+    #This function finds the sum of the digits
+    #n - reads in the number inputted by the user
+    #returns the sum of digits
+    if n < 10:
+        return n
+    else:
+        return n % 10 + sum_digits(n // 10)
+
+def fibonacci(n, n2, recursion):
+    #This function returns the fibonacci sequence of 2 numbers after a given number of recursions
+    #n2 - reads in the  number inputted by the user
+    #n - reads in the number inputted by the user
+    #recursion - the number of recursions inputted by user
+    #returns the number after being iterated
+
+    recursion -= 1
+    newnum = n+n2
+    if recursion > 0:
+        return fibonacci(n2,newnum, recursion)
+    else:
+        return newnum
+"""
+
+def reverse(n):
+    #reverses name
+    #n - reads in the number inputted by the user
+    #returns name with reversed letter position
+    return n[::-1] #returns reversed
+
+def compound(n):
+    #prints first name
+    #name - reads in the name inputted by the user
+    #returns first_name - only the first name in name
+
+def product(n):
+    #prints middle name
+    #name - reads in the name inputted by the user
+    #returns middle_name - only the middle name(s) in name
+"""
+main()
